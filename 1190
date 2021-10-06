@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+public class P1190 {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bf.readLine());
+
+        int people = Integer.parseInt(st.nextToken());
+        int faucets = Integer.parseInt(st.nextToken());
+
+        st = new StringTokenizer(bf.readLine());
+
+        PriorityQueue<Integer> line = new PriorityQueue<>();
+
+        for (int i=0; i<faucets; i++){
+            line.offer(Integer.parseInt(st.nextToken()));
+        }
+
+        int ret = 0;
+        for (int i=faucets; i<people; i++){
+            int next = Integer.parseInt(st.nextToken());
+
+            line.offer(line.poll()+next);
+        }
+
+        for (int i: line){
+            ret = Math.max(ret,i);
+        }
+
+        System.out.println(ret);
+
+
+
+
+
+
+    }
+}
