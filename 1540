@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.*;
+
+public class P1540 {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bf.readLine());
+        
+        int mem = Integer.parseInt(st.nextToken());
+        int size = Integer.parseInt(st.nextToken());
+
+        Queue<Integer> memory = new LinkedList<>();
+
+        st = new StringTokenizer(bf.readLine());
+
+        for (int i=0; i<mem; i++){
+            memory.offer(Integer.parseInt(st.nextToken()));
+        }
+
+        int ret = mem;
+
+        for (int i=mem; i<size; i++){
+            int word = Integer.parseInt(st.nextToken());
+            boolean isStored = false;
+            for (int x: memory){
+                if (x==word) isStored = true;
+            }
+
+            if (!isStored){
+                memory.poll();
+                memory.offer(word);
+            }else{
+                ret++;
+            }
+
+        }
+        
+        System.out.print(ret);
+    }
+}
