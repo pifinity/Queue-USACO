@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.*;
+
+public class MooBuzz {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new FileReader("moobuzz.in"));
+        PrintWriter out = new PrintWriter("moobuzz.out");
+
+        long N = Long.parseLong(bf.readLine());
+
+        long count = N/8;
+
+        long ret =count*8-1;
+        for (long i=count*15-1; i<(count+1)*15; i++){
+            if (i%3!=0&&i%5!=0) ret++;
+           if (ret >=N){
+               out.print(i);
+               out.close();
+               return;
+           }
+
+        }
+
+
+    }
+}
