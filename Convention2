@@ -1,0 +1,77 @@
+import java.io.*;
+import java.util.*;
+
+public class convention2 {
+    static class state implements Comparable<state>{
+        int sen, start, len;
+        public state(int p, int t, int l){
+            this.sen = p;
+            this.start = t;
+            this.len = l;
+        }
+        public int compareTo(state o) {return this.start-o.start;}
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new FileReader("convention2.in"));
+        PrintWriter out = new PrintWriter("convention2.out");
+
+        int N = Integer.parseInt(bf.readLine());
+        state[] cows;
+        int maxTime = 0;
+        int currTime = 0;
+        int currCow = 0;
+
+        cows = new state[N];
+
+        for (int i=1; i<=N; i++){
+            StringTokenizer st = new StringTokenizer(bf.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            cows[i-1] = new state(i, a, b);
+        }
+
+        Arrays.sort(cows);
+
+        PriorityQueue<state> line=new PriorityQueue<>(new Comparator<state>() {
+
+            public int compare(state o1, state o2) {
+                return o1.sen-o2.sen;
+            }
+        });
+
+        while (currCow<N||line.size()>0){
+
+
+            if (currCow<N&&cows[currCow].start<=currTime){
+                line.offer(cows[currCow++]);
+            }else if (line.size()==0){
+                state temp = cows[currCow++];
+                currTime = temp.start+temp.len;
+            }else{
+                state lol = line.poll();
+                maxTime = Math.max(maxTime, currTime-lol.start);
+          //      System.out.println("maxtime: "+(currTime-lol.start));
+                currTime+=lol.len;
+              //  System.out.println(lol.sen+" "+lol.start+" "+lol.len);
+            }
+
+        }
+
+        out.println(maxTime);
+        out.close();
+
+
+
+     /*   for (state i: cows) {
+            System.out.println(i.sen+" "+i.start+" "+i.len);
+        }
+
+      */
+
+
+
+
+
+    }
+}
